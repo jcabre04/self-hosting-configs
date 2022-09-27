@@ -1,3 +1,5 @@
+<img src="https://github.com/jcabre04/self-hosting-configs/.images/banner.png" alt="Banner" width="1000"/>
+
 The directories in this repository hold the configuration files for the services I selfhost. 
 
 These services are for personal and educational use. Their config files are made using `.yaml` for deployment using `docker compose`.
@@ -23,11 +25,11 @@ Below is a summary of what host ports I've assigned to what containers. I made t
 | ^ | 443 (HTTPS) | \- | ^ |
 | Nextcloud | 50010 (HTTP) | cloud.home.lab | Nextcloud is a Google Drive (cloud file management) replacement |
 | Onlyoffice | 50011 (HTTP) | office.home.lab | Onlyoffice is a Microsoft Office replacement. Hooked to and used by Nextcloud. Not usable on its own |
-| KinD Cluster | 50001 (HTTP) | \- | Kubernetes IN Docker is a tool to run Kubernetes clusters using Docker. The tool creates docker containers that behave as independent nodes in a k8s cluster. These 5 ports are open  for k8s testing + learning. Will update with more specifics as needed |
-| ^ | 50002 (HTTP) | \- | ^ |
-| ^ | 50003 (HTTP) | \- | ^ |
-| ^ | 50004 (HTTP) | \- | ^ |
-| ^ | 50005 (HTTP) | \- | ^ |
+| KinD Cluster | 51001 (HTTP) | \- | Kubernetes IN Docker is a tool to run Kubernetes clusters using Docker. The tool creates docker containers that behave as independent nodes in a k8s cluster. These 5 ports are open  for k8s testing + learning. Will update with more specifics as needed |
+| ^ | 51002 (HTTP) | \- | ^ |
+| ^ | 51003 (HTTP) | \- | ^ |
+| ^ | 51004 (HTTP) | \- | ^ |
+| ^ | 51005 (HTTP) | \- | ^ |
 
 *Note*: I used ports starting at 50,000 because they fall within the [private use / ephemeral range](https://en.wikipedia.org/wiki/Ephemeral_port). Known protocols, services, and products should not conflict with these ports. 50,000 is also an easy number to remember.
 
@@ -47,5 +49,15 @@ For `kind`:
 3) run `kind create cluster --config my_default_kind_config.yaml`
 4) verify with `kubectl cluster-info`. The Kubernetes control plane and CoreDNS should be running
 
+
+# Self-hosting network
+Thanks to tailscale, I created a mesh VPN that allows me to access my homelab from any of my devices with its client. Tailscale also allowed me to desginate my homelab as the DNS server that all of my devices with its client will use. This is handy because it removes the need to set up a DHCP server with DNS options or to manually configure DNS on all of my devices. This solution is good enough for my small homelab but may change over time.
+
+`Current network`
+<img src="https://github.com/jcabre04/self-hosting-configs/.images/Homelab-Network.png" alt="Self-hosting network"/>
+
 # TO-DOs
 - [ ] Finish Python cli tool that deploys all services or the given service
+
+# Shoutout
+A shoutout to [zachvance](https://github.com/zachvance) for creating the tool ([slickbanner](https://github.com/zachvance/slickbanner)) I used to create the project's banner.
