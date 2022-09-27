@@ -1,4 +1,4 @@
-<img src="https://github.com/jcabre04/self-hosting-configs/.images/banner.png" alt="Banner" width="1000"/>
+<img src="https://github.com/jcabre04/self-hosting-configs/blob/master/.images/banner.png" alt="Banner" width="1000"/>
 
 The directories in this repository hold the configuration files for the services I selfhost. 
 
@@ -54,7 +54,7 @@ For `kind`:
 Thanks to tailscale, I created a mesh VPN that allows me to access my homelab from any of my devices with its client. Tailscale also allowed me to desginate my homelab as the DNS server that all of my devices with its client will use. This is handy because it removes the need to set up a DHCP server with DNS options or to manually configure DNS on all of my devices. This solution is good enough for my small homelab but may change over time.
 
 `Current network`
-<img src="https://github.com/jcabre04/self-hosting-configs/.images/Homelab-Network.png" alt="Self-hosting network"/>
+<img src="https://github.com/jcabre04/self-hosting-configs/blob/master/.images/Homelab-Network.png" alt="Self-hosting network"/>
 
 # TO-DOs
 - [ ] Finish Python cli tool that deploys all services or the given service
