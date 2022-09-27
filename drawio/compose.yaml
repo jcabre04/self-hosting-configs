@@ -1,0 +1,54 @@
+# version: '3' # Latest best practice is to ommit a version number
+services:
+  plantuml-server:
+    image: jgraph/plantuml-server
+    container_name: drawio-plantuml-server
+    restart: unless-stopped
+    expose:
+      - "8080"
+    networks:
+      - drawionet
+    volumes:
+      - fonts_volume:/usr/share/fonts/drawio
+
+  image-export:
+    image: jgraph/export-server
+    container_name: drawio-export-server
+    restart: unless-stopped
+    expose:
+      - "8000"
+    networks:
+      - drawionet
+    volumes:
+      - fonts_volume:/usr/share/fonts/drawio
+    environment:
+      - DRAWIO_SERVER_URL=https://localhost:50003
+
+  drawio:
+    image: jgraph/drawio:20.3.6
+    container_name: drawio
+    restart: unless-stopped
+    ports:
+      - "50003:8080"
+      # - "50004:8443" # Optional HTTPS
+    links:
+      - plantuml-server:plantuml-server
+      - image-export:image-export
+    depends_on:
+      - plantuml-server
+      - image-export
+    networks:
+      - drawionet
+    environment:
+      - DRAWIO_SELF_CONTAINED=1
+      - PLANTUML_URL=http://plantuml-server:8080/
+      - EXPORT_URL=http://image-export:8000/
+      - DRAWIO_BASE_URL=https://localhost:50003
+      - DRAWIO_PUSHER_MODE=2
+
+networks:
+  drawionet:
+
+
+volumes:
+  fonts_volume:

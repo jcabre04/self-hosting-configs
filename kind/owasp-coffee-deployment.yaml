@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: juice-shop-deployment
+  labels:
+    app: juice-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: juice-shop
+  template:
+    metadata:
+      labels:
+        app: juice-shop
+    spec:
+      containers:
+      - name: juice-shop
+        image: bkimminich/juice-shop
+        ports:
+        - containerPort: 3000
+# Storage here for persistance? across pod replacements
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: juice-shop-service
+spec:
+  selector:
+    app: juice-shop
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 3000 # Service's port
+      targetPort: 3000 # Pod's port. By default, the same as the port
+      nodePort: 30001 # Worker node's port

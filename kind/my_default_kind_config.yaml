@@ -1,0 +1,68 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: book-cluster
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 30001
+    hostPort: 51001
+    protocol: TCP
+  - containerPort: 30002
+    hostPort: 51002
+    protocol: TCP
+  - containerPort: 30003
+    hostPort: 51003
+    protocol: TCP
+  - containerPort: 30004
+    hostPort: 51004
+    protocol: TCP
+  - containerPort: 30005
+    hostPort: 51005
+    protocol: TCP
+  # - containerPort: 80 # For ingress http handling
+  #   hostPort: 80 # Change this to run ingress node alongside my homelab's reverse proxy!!
+  #   protocol: TCP
+  # - containerPort: 443 # For ingress https handling
+  #   hostPort: 443
+  #   protocol: TCP
+  # Need to install an ingress controller first. The following works with KinD. Simply apply it with kubectl: 
+  # https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+- role: worker
+- role: worker
+
+# Example of exposing Pod to localhost using kind containerPort (in Pod spec) and NodePort Service type
+
+# kind: Pod
+# apiVersion: v1
+# metadata:
+#   name: foo
+#   labels:
+#     app: foo
+# spec:
+#   containers:
+#   - name: foo
+#     image: hashicorp/http-echo:0.2.3
+#     args:
+#     - "-text=foo"
+#     ports:
+#     - containerPort: 5678
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: foo
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - name: http
+#     nodePort: 30000
+#     targetPort: 5678
+#     port: 5678
+#   selector:
+#     app: foo

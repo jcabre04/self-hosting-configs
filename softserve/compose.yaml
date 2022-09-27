@@ -1,0 +1,10 @@
+# version: "3.1" # Latest best practice is to ommit a version number
+services:
+  soft-serve:
+    image: charmcli/soft-serve:v0.4.0
+    container_name: soft-serve
+    volumes:
+      - ./data:/soft-serve
+    ports:
+      - 50006:23231
+    restart: unless-stopped

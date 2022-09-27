@@ -1,0 +1,15 @@
+# version: '3.8' # Latest best practice is to ommit a version number
+services:
+  pihole:
+    image: pihole/pihole:2022.09.4
+    container_name: pihole
+    restart: unless-stopped
+    environment:
+      - TZ=America/Los_Angeles
+    volumes:
+      - ./etc-data:/etc/pihole/
+      - ./etc-dnsmasq.d/:/etc/dnsmasq.d/
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "50008:80/tcp"

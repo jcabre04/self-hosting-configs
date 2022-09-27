@@ -1,0 +1,12 @@
+# version: "3.4" # Latest best practice is to ommit a version number
+services:
+  app:
+    image: onlyoffice/documentserver:7.2
+    container_name: onlyoffice
+    ports:
+      - 50011:80
+    volumes:
+      - ./data:/var/www/onlyoffice/Data
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+    restart: unless-stopped

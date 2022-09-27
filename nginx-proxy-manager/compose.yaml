@@ -1,0 +1,13 @@
+# version: '3' # Latest best practice is to ommit a version number
+services:
+  app:
+    container_name: npm
+    image: jc21/nginx-proxy-manager:2.9.18
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '50009:81' #admin
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt

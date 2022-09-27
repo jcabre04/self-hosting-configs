@@ -1,0 +1,28 @@
+# version: "3.4" # Latest best practice is to ommit a version number
+services:
+  app:
+    image: monica:3.7.0-apache
+    container_name: monica
+    depends_on:
+      - db
+    ports:
+      - 50007:80
+    environment:
+      - DB_HOST=db
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./data:/var/www/html/storage
+    restart: unless-stopped
+
+  db:
+    image: mysql:5.7
+    container_name: monica-db
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    restart: unless-stopped
